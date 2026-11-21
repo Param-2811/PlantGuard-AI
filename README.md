@@ -100,6 +100,8 @@ FastAPI backend          decode → leaf-colour check → resize 438 / centre-cr
 
 EfficientNet-B6 starts from ImageNet weights; its 1000-class head is replaced by a 38-class head.
 
+![How an image passes through EfficientNet-B6](docs/images/efficientnet-b6.png)
+
 - **Stage 1 (epochs 1–2):** backbone frozen, only the new head learns (LR 2e-3).
 - **Stage 2 (epochs 3–10):** the last two blocks are unfrozen with a 10× smaller LR (2e-4).
 - AdamW with cosine annealing, weight decay 1e-4, label smoothing 0.05, square-root inverse class
