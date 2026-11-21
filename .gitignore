@@ -39,3 +39,7 @@ out/
 *.docx
 *.log
 logs/
+
+# Public (redacted) project report
+!/docs/
+!/docs/PlantGuard_AI_Report.docx

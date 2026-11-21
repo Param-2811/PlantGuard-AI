@@ -29,6 +29,10 @@ On Windows, `start.bat` launches both servers.
 
 See [SETUP.md](SETUP.md) for the full guide and API reference.
 
+## Project report
+
+Full write-up (model, training results, architecture, testing): [docs/PlantGuard_AI_Report.docx](docs/PlantGuard_AI_Report.docx)
+
 ## Training
 
 Dataset: [PlantVillage](https://www.kaggle.com/datasets/abdallahalidev/plantvillage-dataset) (not included, ~54k images per variant). Set `DATASET_PATH` in `training/train.py` and `training/evaluate.py`, then run `python training/train.py`.
