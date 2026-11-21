@@ -31,7 +31,7 @@ See [SETUP.md](SETUP.md) for the full guide and API reference.
 
 ## Project report
 
-Full write-up (model, training results, architecture, testing): [docs/PlantGuard_AI_Report.docx](docs/PlantGuard_AI_Report.docx)
+Full write-up (model, training results, architecture, testing): [PDF](docs/PlantGuard_AI_Report.pdf) · [Word](docs/PlantGuard_AI_Report.docx)
 
 ## Training
 

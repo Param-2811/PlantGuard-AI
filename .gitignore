@@ -43,3 +43,4 @@ logs/
 # Public (redacted) project report
 !/docs/
 !/docs/PlantGuard_AI_Report.docx
+!/docs/PlantGuard_AI_Report.pdf
