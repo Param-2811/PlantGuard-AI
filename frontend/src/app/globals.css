@@ -1,0 +1,387 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Design concept: field specimen index / diagnostic instrument.
+  Palette pulled from actual leaf material — chlorophyll green, blight rust,
+  soil ochre — on a sage specimen-paper ground. Not the cream+terracotta or
+  near-black+neon defaults.
+*/
+:root {
+  --paper: #edf0e3;
+  --paper-raised: #f7f8f1;
+  --ink: #1f2a1e;
+  --ink-muted: #5c6b54;
+  --line: #c9d0bc;
+  --line-strong: #a9b499;
+  --grid-line: rgba(31, 42, 30, 0.07);
+
+  --chlorophyll: #3c6b3f;
+  --chlorophyll-deep: #2a4f2c;
+  --chlorophyll-soft: #dde7d2;
+
+  --blight: #a03d22;
+  --blight-deep: #7c2e19;
+  --blight-soft: #f3e0d5;
+
+  --ochre: #b98a2e;
+  --ochre-deep: #8f6a1f;
+  --ochre-soft: #f1e5c9;
+
+  /* legacy names kept so components didn't all need touching for the retheme */
+  --bg: var(--paper);
+  --bg-subtle: var(--paper);
+  --surface: var(--paper-raised);
+  --border: var(--line);
+  --text: var(--ink);
+  --text-muted: var(--ink-muted);
+
+  --accent: var(--chlorophyll);
+  --accent-hover: var(--chlorophyll-deep);
+  --accent-soft: var(--chlorophyll-soft);
+  --accent-border: var(--chlorophyll);
+
+  --danger: var(--blight);
+  --danger-hover: var(--blight-deep);
+  --danger-soft: var(--blight-soft);
+  --danger-border: var(--blight);
+
+  --radius: 3px;
+  --radius-sm: 2px;
+  --shadow-sm: 0 1px 0 rgba(31, 23, 42, 0.05);
+  --shadow-md: 0 3px 14px rgba(31, 42, 30, 0.08);
+  --shadow-lg: 0 14px 34px rgba(31, 42, 30, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.font-mono {
+  font-family: var(--font-mono), 'IBM Plex Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Field-notebook grid backdrop ── */
+.field-grid {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ── Buttons: clipped top-right corner, mono label ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 12px 22px;
+  border-radius: 0;
+  border: 1.5px solid var(--ink);
+  cursor: pointer;
+  text-decoration: none;
+  clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 11px, 100% 100%, 0 100%);
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--chlorophyll);
+  border-color: var(--chlorophyll);
+  color: var(--paper-raised);
+}
+
+.btn-primary:hover {
+  background: var(--chlorophyll-deep);
+  border-color: var(--chlorophyll-deep);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+.btn-secondary:hover {
+  background: var(--paper-raised);
+  border-color: var(--ink);
+}
+
+/* ── Cards: specimen-card language — corner registration marks ── */
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background:
+    linear-gradient(var(--line-strong), var(--line-strong)) center / 1px 9px no-repeat,
+    linear-gradient(var(--line-strong), var(--line-strong)) center / 9px 1px no-repeat;
+  pointer-events: none;
+}
+
+.card::before {
+  top: -4px;
+  left: -4px;
+}
+
+.card::after {
+  bottom: -4px;
+  right: -4px;
+}
+
+/* Hole-punch tab for primary specimen cards */
+.punch {
+  padding-top: 30px;
+}
+
+.punch::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 24px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  transform: translateY(-50%);
+}
+
+/* ── Tag / label chip (replaces rounded pill badges) ── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--paper-raised);
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+.tag-accent {
+  background: var(--chlorophyll-soft);
+  border-color: var(--chlorophyll);
+  color: var(--chlorophyll-deep);
+}
+
+.tag-alert {
+  background: var(--blight-soft);
+  border-color: var(--blight);
+  color: var(--blight-deep);
+}
+
+.tag-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+}
+
+/* ── Entrances (subtle, used sparingly) ── */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.delay-1 { animation-delay: 0.05s; }
+.delay-2 { animation-delay: 0.1s; }
+.delay-3 { animation-delay: 0.15s; }
+.delay-4 { animation-delay: 0.2s; }
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 1.6s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 0.9s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in, .animate-pulse-soft, .animate-spin, .scan-line {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ── Scan bed (analysis loading state) ── */
+.scan-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: var(--accent);
+  animation: scanSweep 2.4s ease-in-out infinite;
+}
+
+.scan-line::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 2px;
+  height: 28px;
+  background: linear-gradient(var(--chlorophyll), transparent);
+  opacity: 0.16;
+}
+
+@keyframes scanSweep {
+  0%, 100% { top: 0; }
+  50% { top: calc(100% - 2px); }
+}
+
+/* ── Responsive grids ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 860px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .grid-4 { grid-template-columns: 1fr; }
+}
+
+.plant-col-divider { border-left: 1px solid var(--border); }
+
+@media (max-width: 860px) {
+  .plant-col-divider { border-left: none; border-top: 1px solid var(--border); }
+}
+
+/* Connecting rail behind a 3-up step grid (gap: 32px). Circle is centered in
+   its column, so the line's inset from each edge is exactly the center of
+   the first/last column: (100/6)% minus half the gap's share per column. */
+.step-rail {
+  position: absolute;
+  top: 22px;
+  left: calc(16.667% - 10.667px);
+  right: calc(16.667% - 10.667px);
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--line-strong) 0 4px, transparent 4px 9px);
+}
+
+@media (max-width: 860px) {
+  .step-rail { display: none; }
+}
+
+/* ── Custom cursor: dot tracks instantly, ring eases in behind it ── */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  opacity: 0;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  transition: opacity 0.2s ease;
+}
+
+.cursor-ring {
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid var(--accent);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ring {
+    transition: opacity 0.2s ease;
+  }
+}
+
+/* ── Scrollbar (chat / advice panels) ── */
+.scroll-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 3px;
+}

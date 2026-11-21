@@ -1,0 +1,41 @@
+# Allowlist: only these top-level paths are published (keeps personal docs, reports, logs out)
+/*
+!/.gitignore
+!/.env.example
+!/README.md
+!/SETUP.md
+!/LICENSE
+!/start.bat
+!/PROJECT_DOCUMENTATION.txt
+!/backend/
+!/frontend/
+!/training/
+
+# Secrets
+.env
+.env.*
+!.env.example
+.claude/
+
+# Model weights (download from GitHub Releases) and tensors
+*.pth
+*.pt
+*.onnx
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# Reports, docs and logs inside code folders
+*.pdf
+*.docx
+*.log
+logs/
